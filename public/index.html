@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TILT SMASH</title>
+    <link rel="stylesheet" href="style/desktop.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="tank"></canvas>
+
+    <div id="overlay">
+        <div id="logo">TILT SMASH</div>
+
+        <div id="status">Scan to connect your phone:</div>
+        <div id="qr"></div>
+    </div>
+
+    <div id="ready-screen">
+        <div id="ready-title">ARE YOU READY?</div>
+        <div id="tagline">Brace yourself - the warm squares are coming.<br>You are the last cold-toned square standing.
+        </div>
+
+        <h2 id="instructions-title">Instructions</h2>
+        <div id="tips">
+            <p>1. Hold your phone flat &amp; horizontal - easier to aim.</p>
+            <p>2. Don't run. They will chase you.</p>
+            <p>3. Tilt to move. Shoot as many as you can.</p>
+        </div>
+        <div id="power-ups">
+            <h2 id="powerups-title">Power-ups</h2>
+            <div id="powerups-legend">
+                <div class="powerup-item">
+                    <span class="powerup-dot" style="background:#44ff88"></span>
+                    <span>Extra life</span>
+                </div>
+                <div class="powerup-item">
+                    <span class="powerup-dot" style="background:#44aaff"></span>
+                    <span>Big bullets - 10s</span>
+                </div>
+                <div class="powerup-item">
+                    <span class="powerup-dot" style="background:#2266ff"></span>
+                    <span>Triple shot - 10s</span>
+                </div>
+                <div class="powerup-item">
+                    <span class="powerup-dot" style="background:#cc44ff"></span>
+                    <span>Nuke - clears all enemies</span>
+                </div>
+                <div class="powerup-item">
+                    <span class="powerup-dot" style="background:#aa22ff"></span>
+                    <span>Slow enemies - 10s</span>
+                </div>
+            </div>
+        </div>
+        <button id="lets-go-btn" onclick="handleLetsGo()">LET'S GO !!</button>
+    </div>
+
+    <div id="countdown">
+        <div id="countdown-number">3</div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"
+        integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw=="
+        crossorigin="anonymous"></script>
+    <script src="script/desktop.js"></script>
+</body>
+
+</html>
