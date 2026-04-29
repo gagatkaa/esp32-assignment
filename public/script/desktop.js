@@ -70,7 +70,7 @@ let aimY = 0;
 let score = 0;
 let bestScore = parseInt(localStorage.getItem("tiltSmashBest"), 10) || 0;
 let lives = 5;
-let gameOver = false; l
+let gameOver = false;
 let gameStarted = false;
 let startTime = Date.now();
 
