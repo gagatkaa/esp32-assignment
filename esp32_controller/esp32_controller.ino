@@ -1,16 +1,20 @@
 #define VRX_PIN 15
 #define VRY_PIN 16
 
-#define BTN_UP 6
+#define BTN_UP 8
 #define BTN_DOWN 5
 #define BTN_LEFT 4
 #define BTN_RIGHT 7
+
+const int LED_COUNT = 5;
+const int LIFE_LEDS[LED_COUNT] = {20, 21, 47, 48, 42};
 
 const int JOY_CENTER_X = 2048;
 const int JOY_CENTER_Y = 2048;
 const int JOY_DEADZONE = 350;
 
 int lastBtnState = 0;
+int currentLives = 5;
 
 bool isPressed(int pin) {
   return digitalRead(pin) == LOW;
@@ -25,6 +29,36 @@ float normalizeAxis(int raw, int center) {
 
   float value = diff / 2048.0;
   return constrain(value, -1.0, 1.0);
+}
+
+void setLives(int lives) {
+  currentLives = constrain(lives, 0, LED_COUNT);
+
+  for (int i = 0; i < LED_COUNT; i++) {
+    digitalWrite(LIFE_LEDS[i], i < currentLives ? HIGH : LOW);
+  }
+}
+
+void readSerialLives() {
+  if (Serial.available() <= 0) {
+    return;
+  }
+
+  String message = Serial.readStringUntil('\n');
+  message.trim();
+
+  int livesIndex = message.indexOf("\"lives\"");
+  if (livesIndex == -1) {
+    return;
+  }
+
+  int colonIndex = message.indexOf(':', livesIndex);
+  if (colonIndex == -1) {
+    return;
+  }
+
+  int lives = message.substring(colonIndex + 1).toInt();
+  setLives(lives);
 }
 
 void sendMove(float x, float y) {
@@ -55,9 +89,17 @@ void setup() {
   pinMode(BTN_DOWN, INPUT_PULLUP);
   pinMode(BTN_UP, INPUT_PULLUP);
   pinMode(BTN_RIGHT, INPUT_PULLUP);
+
+  for (int i = 0; i < LED_COUNT; i++) {
+    pinMode(LIFE_LEDS[i], OUTPUT);
+  }
+
+  setLives(5);
 }
 
 void loop() {
+  readSerialLives();
+
   int rawX = analogRead(VRX_PIN);
   int rawY = analogRead(VRY_PIN);
 

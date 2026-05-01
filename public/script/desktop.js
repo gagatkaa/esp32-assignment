@@ -75,6 +75,9 @@ let gameStarted = false;
 let startTime = Date.now();
 
 let espConnected = false;
+let espWriter = null;
+let lastLivesSent = null;
+
 let lastShotAt = 0;
 let gameOverSoundPlayed = false;
 
@@ -176,10 +179,14 @@ async function connectEsp32Controller() {
     const port = await navigator.serial.requestPort();
     await port.open({ baudRate: 115200 });
 
+    espWriter = port.writable.getWriter();
+
     espConnected = true;
     statusEl.textContent = "ESP32 connected!";
     overlay.classList.add("hidden");
     showReadyScreen();
+
+    sendLivesToEsp32();
 
     const decoder = new TextDecoderStream();
     port.readable.pipeTo(decoder.writable);
@@ -213,6 +220,22 @@ async function connectEsp32Controller() {
     console.error(err);
     statusEl.textContent = "ESP32 connection failed.";
   }
+}
+
+function sendLivesToEsp32() {
+  if (!espWriter) return;
+
+  const safeLives = Math.max(0, Math.min(5, lives));
+
+  if (safeLives === lastLivesSent) return;
+
+  lastLivesSent = safeLives;
+
+  const message = JSON.stringify({ lives: safeLives }) + "\n";
+
+  espWriter.write(new TextEncoder().encode(message)).catch((err) => {
+    console.error("Failed to send lives to ESP32:", err);
+  });
 }
 
 function handleEsp32Message(msg) {
@@ -409,6 +432,8 @@ function handleShoot(payload = {}) {
 function restartGame() {
   score = 0;
   lives = 5;
+  sendLivesToEsp32();
+
   gameOver = false;
   gameStarted = false;
   gameOverSoundPlayed = false;
@@ -519,6 +544,7 @@ function applyPowerup(type) {
 
   if (type === "extraLife") {
     lives = Math.min(lives + 1, 5);
+    sendLivesToEsp32();
     showToast("+1 LIFE", "#44ff88");
   }
 
@@ -866,6 +892,7 @@ function draw() {
     if (hit(enemy.x, enemy.y, enemy.size, cx, cy, TANK_SIZE)) {
       enemies.splice(i, 1);
       lives -= 1;
+      sendLivesToEsp32();
 
       playRandomSound("hit", 0.6);
 
