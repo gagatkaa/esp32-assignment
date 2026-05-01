@@ -149,22 +149,41 @@ loadSounds();
 function createEsp32ConnectButton() {
   const button = document.createElement("button");
   button.textContent = "Connect ESP32";
+  button.id = "esp32-connect-btn";
 
-  button.style.position = "fixed";
-  button.style.left = "20px";
-  button.style.bottom = "20px";
-  button.style.zIndex = "9999";
-  button.style.padding = "12px 16px";
-  button.style.border = "0";
+  button.style.fontSize = "1.2rem";
+  button.style.color = "#111";
+  button.style.background = "#4a9";
+  button.style.border = "none";
   button.style.borderRadius = "8px";
-  button.style.background = "#2d7";
-  button.style.color = "#000";
-  button.style.fontFamily = "monospace";
-  button.style.fontWeight = "bold";
+  button.style.padding = "12px 32px";
   button.style.cursor = "pointer";
+  button.style.boxShadow = "0 4px 0 #2d7";
+  button.style.letterSpacing = "2px";
+  button.style.transition = "transform 0.08s, box-shadow 0.08s";
+  button.style.fontFamily = '"Press Start 2P", monospace';
+  button.style.marginTop = "16px";
+
+  button.addEventListener("mouseenter", () => {
+    button.style.background = "#5bc";
+  });
+
+  button.addEventListener("mouseleave", () => {
+    button.style.background = "#4a9";
+  });
+
+  button.addEventListener("mousedown", () => {
+    button.style.transform = "translateY(2px)";
+    button.style.boxShadow = "0 1px 0 #2d7";
+  });
+
+  button.addEventListener("mouseup", () => {
+    button.style.transform = "translateY(0)";
+    button.style.boxShadow = "0 4px 0 #2d7";
+  });
 
   button.addEventListener("click", connectEsp32Controller);
-  document.body.appendChild(button);
+  document.getElementById("overlay").appendChild(button);
 }
 
 async function connectEsp32Controller() {
@@ -181,6 +200,10 @@ async function connectEsp32Controller() {
 
     espConnected = true;
     statusEl.textContent = "ESP32 connected!";
+
+    const espBtn = document.getElementById("esp32-connect-btn");
+    if (espBtn) espBtn.remove();
+
     overlay.classList.add("hidden");
     showReadyScreen();
 
