@@ -63,16 +63,6 @@ body {
   text-align: center;
 }
 
-#qr img {
-  display: block;
-  width: 200px;
-  height: 200px;
-}
-
-#qr {
-  margin: 20px 0;
-}
-
 #logo {
   font-size: 6rem;
   color: #4a9;

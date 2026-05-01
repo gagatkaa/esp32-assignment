@@ -1,5 +1,3 @@
-const socket = io({ reconnection: true });
-
 // DOM
 const canvas = document.getElementById("tank");
 const ctx = canvas.getContext("2d");
@@ -345,12 +343,6 @@ canvas.addEventListener("click", (e) => {
       bgMusic.pause();
     }
   }
-});
-
-// Socket fallback only
-socket.on("connect", () => {
-  statusEl.textContent = "Connect ESP32 controller:";
-  qrEl.innerHTML = "";
 });
 
 // Resize
