@@ -3,7 +3,6 @@ const canvas = document.getElementById("tank");
 const ctx = canvas.getContext("2d");
 
 const statusEl = document.getElementById("status");
-const qrEl = document.getElementById("qr");
 const overlay = document.getElementById("overlay");
 const countdownEl = document.getElementById("countdown");
 const countdownNumber = document.getElementById("countdown-number");
@@ -119,7 +118,6 @@ async function loadSounds() {
     soundLibrary.gameOver = sounds.gameOver || [];
     soundLibrary.hit = sounds.hit || [];
 
-    console.log("Loaded sounds:", soundLibrary);
   } catch (err) {
     console.error("Failed to load sounds:", err);
   }

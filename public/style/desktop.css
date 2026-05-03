@@ -54,14 +54,6 @@ body {
 #instructions-title {
   color: white;
 }
-#url {
-  color: #7df;
-  word-break: break-all;
-  display: block;
-  margin-bottom: 16px;
-  font-size: 14px;
-  text-align: center;
-}
 
 #logo {
   font-size: 6rem;
