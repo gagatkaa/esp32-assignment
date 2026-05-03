@@ -23,7 +23,7 @@ app.use(express.static("public"));
 
 app.get("/api/sounds", (req, res) => {
   const soundRoot = path.join(__dirname, "public", "sound");
-  const categories = ["boost", "gameOver", "hit"];
+  const categories = ["boost", "gameOver", "hit", "playerhit"];
   const sounds = {};
 
   for (const category of categories) {

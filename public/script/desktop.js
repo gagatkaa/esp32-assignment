@@ -117,6 +117,7 @@ async function loadSounds() {
     soundLibrary.boost = sounds.boost || [];
     soundLibrary.gameOver = sounds.gameOver || [];
     soundLibrary.hit = sounds.hit || [];
+    soundLibrary.playerhit = sounds.playerhit || [];
 
   } catch (err) {
     console.error("Failed to load sounds:", err);
@@ -139,6 +140,7 @@ function primeAudio() {
   playRandomSound("hit", 0);
   playRandomSound("boost", 0);
   playRandomSound("gameOver", 0);
+  playRandomSound("playerhit", 0);
 }
 
 loadSounds();
@@ -907,7 +909,7 @@ function draw() {
       lives -= 1;
       sendLivesToEsp32();
 
-      playRandomSound("hit", 0.6);
+      playRandomSound("playerhit", 0.6);
 
       if (lives <= 0) {
         endGame();
