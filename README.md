@@ -6,7 +6,8 @@ Web-based shooting game controlled by ESP32 with joystick and buttons.
 
 ### Hardware (ESP32)
 - Joystick connected to pins 15 (X) and 16 (Y)
-- 4 buttons: UP (6), DOWN (5), LEFT (4), RIGHT (7)
+- 4 buttons: UP (8), DOWN (5), LEFT (4), RIGHT (7)
+- 5 LED indicators for lives: pins 20, 21, 47, 48, 42
 - ESP32 sends data over Serial (115200 baud) to the browser using Web Serial API
 
 ### What ESP32 sends
@@ -67,10 +68,23 @@ ESP32 sends JSON messages over Serial:
 
 ### Setup
 
+#### Prerequisites
+- Node.js installed
+- Chrome or Edge browser (required for Web Serial API)
+- SSL certificates in `certs/` directory (`cert.pem` and `key.pem`)
+
+#### SSL Certificates
+The `certs/` directory is gitignored. Generate self-signed certificates:
+```bash
+mkdir -p certs
+openssl req -x509 -newkey rsa:2048 -keyout certs/key.pem -out certs/cert.pem -days 365 -nodes -subj "/CN=localhost"
+```
+
+#### Steps
 1. Install dependencies: `npm install`
-2. Upload `esp32_controller.ino` to ESP32
+2. Upload `esp32_controller/esp32_controller.ino` to ESP32 using Arduino IDE
 3. Connect joystick and buttons to pins as defined in code
 4. Run server: `npm start`
-5. Open `https://<your-ip>:3000` in Chrome/Edge
+5. Open `https://<your-ip>:3000` in Chrome/Edge (accept the self-signed certificate warning)
 6. Click "Connect ESP32" and select the serial port
 7. Click "LET'S GO !!" to start
