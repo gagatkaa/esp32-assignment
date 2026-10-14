@@ -1,5 +1,14 @@
-# ESP32 Tank Game
+# ESP32 Tank Game — browser game with a physical controller
 
+> A top-down shooter that runs in the browser and is played with a custom ESP32 joystick controller.
+
+**What I did:** Game design, the full web game (JavaScript, canvas, power-ups, sound) and the ESP32 controller firmware (solo project, Howest DEVINE).
+
+**Built with:** JavaScript · Web Serial API · ESP32 (Arduino) · Node.js / Express
+
+**What it shows:** connecting hardware to the web in real time, game feel and feedback (lives shown on LEDs, power-ups, sound), and clear data protocols between device and browser.
+
+---
 Web-based shooting game controlled by ESP32 with joystick and buttons.
 
 ## How it works
